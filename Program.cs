@@ -6,15 +6,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var app = builder.Build();
+bool isBusy = false;
 
 
-app.MapGet("/divisibility", (DUnit input) =>
+app.MapPost("/divisibility", (DUnit input) =>
 {
+    isBusy = true;
     var Ad = new AdvancedDivisibility(input.Divisor);
+    isBusy = false;
     return Ad.IsDivisible(input.Dividend);
 });
 
 
+app.MapGet("/state", () =>
+{
+    return isBusy;
+});
 
 app.Run();
 
