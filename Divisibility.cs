@@ -82,15 +82,15 @@ namespace Primes.Divisibility
                 }
 
                 BigInteger n2 = Dividend;
-                k++;
+                //k++;
                 while (a > k * b)
                 {
                     n2 = a - k * b;
                     b = (byte)(n2 % 10);
                     a = (n2) / 10;
-                    Console.WriteLine("a: {0}, b: {1}, k{2}, n2, {3}", a, b, k, n2);
+                    //Console.WriteLine("a: {0}, b: {1}, k{2}, n2, {3}", a, b, k, n2);
                 }
-                n2 += b;
+                //n2 += b;
                 if (n2 % divisor == 0) return true;
                 else return false;
             }

@@ -5,19 +5,29 @@ using Primes.Communication;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers().AddJsonOptions((options) => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
 
 var app = builder.Build();
 bool isBusy = false;
 DcConfiguration config = new DcConfiguration(Convert.ToUInt32(Environment.GetEnvironmentVariable("DCID")), ipFromString(Environment.GetEnvironmentVariable("IP")));
 
-app.MapPost("/divisibility", (DUnit input) =>
+
+//divisor = input[0]
+app.MapPost("/divisibility", (List<byte[]> input) =>
 {
-    global::System.Console.WriteLine("Divisibility");
     isBusy = true;
-    var Ad = new AdvancedDivisibility(input.Divisor);
+    Console.WriteLine("Divisibility");
+    
+    var divisor = new BigInteger(input[0]);
+    var dividend = new BigInteger(input[1]);
+
+    var Ad = new AdvancedDivisibility(divisor);
+    bool output = Ad.IsDivisible(dividend);
+    
     isBusy = false;
-    return Ad.IsDivisible(input.Dividend);
+    return output;
 });
+
 
 app.MapGet("/state", () =>
 {
@@ -52,3 +62,4 @@ byte[] ipFromString(string input)
     }
     return output;
 }
+
