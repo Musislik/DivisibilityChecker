@@ -12,6 +12,7 @@ bool isBusy = false;
 DcConfiguration config = new DcConfiguration(Convert.ToUInt32(Environment.GetEnvironmentVariable("DCID")), ipFromString(Environment.GetEnvironmentVariable("IP")));
 
 
+
 //divisor = input[0]
 app.MapPost("/divisibility", (List<byte[]> input) =>
 {
@@ -21,6 +22,8 @@ app.MapPost("/divisibility", (List<byte[]> input) =>
     var divisor = new BigInteger(input[0]);
     var dividend = new BigInteger(input[1]);
 
+    if (BasicDivisibility.DivisibleByBasic(dividend)) return false;
+    
     var Ad = new AdvancedDivisibility(divisor);
     bool output = Ad.IsDivisible(dividend);
     
