@@ -59,7 +59,17 @@ namespace Primes.Divisibility
             }
             public bool IsDivisible(BigInteger Dividend)
             {
-                byte b = (byte)(Dividend % 10);                 //posledni cifra
+            byte b = 5;
+            try
+            {
+                b = (byte)(Dividend % 10);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + divisor + Dividend);
+                throw;
+            }
+                                 //posledni cifra
                 BigInteger a = (Dividend - b) / 10;             //zbytek, jeste zkusit - posledni cifra, /10
                 BigInteger k;                                   //konstanta k
                 switch ((byte)(divisor % 10))
