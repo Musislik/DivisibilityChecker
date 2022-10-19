@@ -1,6 +1,7 @@
 using System.Numerics;
 using Primes.Divisibility;
 using Primes.Communication;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,17 +17,19 @@ DcConfiguration config = new DcConfiguration(Convert.ToUInt32(Environment.GetEnv
 //divisor = input[0]
 app.MapPost("/divisibility", (List<byte[]> input) =>
 {
+    var sw = new Stopwatch();
     isBusy = true;
-    Console.WriteLine("Divisibility");
+    //Console.WriteLine("Divisibility");
     
     var divisor = new BigInteger(input[0]);
     var dividend = new BigInteger(input[1]);
-
+    sw.Start();
     if (BasicDivisibility.DivisibleByBasic(dividend)) return false;
-    
+    global::System.Console.WriteLine("BD: " + sw.ElapsedMilliseconds);
     var Ad = new AdvancedDivisibility(divisor);
     bool output = Ad.IsDivisible(dividend);
-    
+    sw.Stop();
+    global::System.Console.WriteLine(sw.ElapsedMilliseconds);
     isBusy = false;
     return output;
 });
@@ -34,7 +37,7 @@ app.MapPost("/divisibility", (List<byte[]> input) =>
 
 app.MapGet("/state", () =>
 {
-    global::System.Console.WriteLine("sending state");
+    //global::System.Console.WriteLine("sending state");
     return isBusy;
 });
 
