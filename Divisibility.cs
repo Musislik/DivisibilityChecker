@@ -46,7 +46,6 @@ namespace Primes.Divisibility
             return (DivisibleByTwo(input) || DivisibleByThree(input) || DivisibleByFive(input)) ? true : false;
         }
     }
-
         public class AdvancedDivisibility
         {
             private BigInteger divisor;
@@ -57,6 +56,10 @@ namespace Primes.Divisibility
             }
             public bool IsDivisible(BigInteger Dividend)
             {
+            if (Dividend == null)
+	{
+                throw new Exception("nullll");
+	}
             byte b = 5;
             try
             {

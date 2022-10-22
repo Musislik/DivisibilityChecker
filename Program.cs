@@ -19,17 +19,14 @@ app.MapPost("/divisibility", (List<byte[]> input) =>
 {
     var sw = new Stopwatch();
     isBusy = true;
-    //Console.WriteLine("Divisibility");
     
     var divisor = new BigInteger(input[0]);
     var dividend = new BigInteger(input[1]);
-    sw.Start();
-    if (BasicDivisibility.DivisibleByBasic(dividend)) return false;
-    global::System.Console.WriteLine("BD: " + sw.ElapsedMilliseconds);
+
+    Console.WriteLine("divisor {0}, dividend {1}", divisor, dividend);
+    if (BasicDivisibility.DivisibleByBasic(divisor) || BasicDivisibility.DivisibleByBasic(divisor)) return false;
     var Ad = new AdvancedDivisibility(divisor);
     bool output = Ad.IsDivisible(dividend);
-    sw.Stop();
-    global::System.Console.WriteLine(sw.ElapsedMilliseconds);
     isBusy = false;
     return output;
 });
